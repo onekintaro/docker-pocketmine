@@ -1,3 +1,24 @@
+This fork of https://github.com/nmarus/docker-pocketmine provides a working Minecraft Pocket Edition docker container, tested on Nov 25, 2017 against the latest build of Minecraft PE, Jenkins build 452, available at https://jenkins.pmmp.io/job/PocketMine-MP/452
+
+
+This fork installs PHP 7.2 and explicitly installs build 452. You can change the build number in the Dockerfile and browse build numbers at https://jenkins.pmmp.io/job/PocketMine-MP
+
+
+It uses the installer.sh script available at https://raw.githubusercontent.com/pmmp/php-build-scripts/master/installer.sh
+
+To build it:
+```
+docker build -t rkuzsma/docker-pocketmine .
+```
+
+To run it:
+```
+docker run --rm -d -it -p 19132:19132/tcp -p 19132:19132/udp  -v /SOME_LOCAL_DIRECTORY_TO_SAVE_WORLDS:/data --name pocketmine rkuzsma/docker-pocketmine
+```
+
+
+Original README.md starts below
+
 # Pocketmine for Docker
 
 This is an implementation of the [Pocketmine] (https://www.pocketmine.net) LAN server for allowing [Minecraft-PE IOS clients] (https://itunes.apple.com/us/app/minecraft-pocket-edition/id479516143?mt=8) to play. This is running the development version of pocketmine to support the [recent updates] (http://gaming.stackexchange.com/questions/222592/pocketmine-mp-installation-not-completing-connections) to the client protocol that Minecraft-PE uses. 

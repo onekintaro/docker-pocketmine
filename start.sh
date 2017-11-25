@@ -1,25 +1,61 @@
 #!/bin/bash
+DIR="$(cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
+cd "$DIR"
 
-set -e
+DO_LOOP="no"
 
-# stage installer
-if [ -e /data/install.sh ]; then
-  rm -f /data/install.sh
+while getopts "p:f:l" OPTION 2> /dev/null; do
+	case ${OPTION} in
+		p)
+			PHP_BINARY="$OPTARG"
+			;;
+		f)
+			POCKETMINE_FILE="$OPTARG"
+			;;
+		l)
+			DO_LOOP="yes"
+			;;
+		\?)
+			break
+			;;
+	esac
+done
+
+if [ "$PHP_BINARY" == "" ]; then
+	if [ -f ./bin/php7/bin/php ]; then
+		export PHPRC=""
+		PHP_BINARY="./bin/php7/bin/php"
+	elif [ type php 2>/dev/null ]; then
+		PHP_BINARY=$(type -p php)
+	else
+		echo "Couldn't find a working PHP 7 binary, please use the installer."
+		exit 1
+	fi
 fi
 
-wget -q -O /data/install.sh https://get.pocketmine.net/
-chmod 755 /data/install.sh
-
-# check if configuration file exists
-if [ ! -e /data/server.properties ]; then
-  cp /tmp/server.properties /data/server.properties
+if [ "$POCKETMINE_FILE" == "" ]; then
+	if [ -f ./PocketMine-MP.phar ]; then
+		POCKETMINE_FILE="./PocketMine-MP.phar"
+	elif [ -f ./src/pocketmine/PocketMine.php ]; then
+		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
+	else
+		echo "Couldn't find a valid PocketMine-MP installation"
+		exit 1
+	fi
 fi
 
-# setup owner
-chown -R minecraft:minecraft /data
+LOOPS=0
 
-# install pocketmine
-sudo -E -u minecraft ./install.sh -v development
+set +e
+while [ "$LOOPS" -eq 0 ] || [ "$DO_LOOP" == "yes" ]; do
+	if [ "$DO_LOOP" == "yes" ]; then
+		"$PHP_BINARY" "$POCKETMINE_FILE" $@
+	else
+		exec "$PHP_BINARY" "$POCKETMINE_FILE" $@
+	fi
+	((LOOPS++))
+done
 
-# start pocketmine
-exec sudo -E -u minecraft PHP_BINARY=/data/bin/php5/bin/php ./start.sh
+if [ ${LOOPS} -gt 1 ]; then
+	echo "Restarted $LOOPS times"
+fi
