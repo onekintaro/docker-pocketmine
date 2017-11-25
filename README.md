@@ -1,7 +1,7 @@
 This fork of https://github.com/nmarus/docker-pocketmine provides a working Minecraft Pocket Edition docker container, tested on Nov 25, 2017 against the latest build of Minecraft PE, Jenkins build 452, available at https://jenkins.pmmp.io/job/PocketMine-MP/452
 
 
-This fork installs PHP 7.2 and explicitly installs build 452. You can change the build number in the Dockerfile and browse build numbers at https://jenkins.pmmp.io/job/PocketMine-MP
+This fork installs PHP 7.2 and explicitly installs build 452 of Pocket Minecraft. You can change the build number by running docker with `-e POCKETMINE_BUILD_NUMBER=452` (or some other build number).  Browse build numbers at https://jenkins.pmmp.io/job/PocketMine-MP
 
 
 It uses the installer.sh script available at https://raw.githubusercontent.com/pmmp/php-build-scripts/master/installer.sh
@@ -13,8 +13,10 @@ docker build -t rkuzsma/docker-pocketmine .
 
 To run it:
 ```
-docker run --rm -d -it -p 19132:19132/tcp -p 19132:19132/udp  -v /SOME_LOCAL_DIRECTORY_TO_SAVE_WORLDS:/data --name pocketmine rkuzsma/docker-pocketmine
+docker run --rm -it -p 19132:19132/tcp -p 19132:19132/udp  -v /SOME_LOCAL_DIRECTORY:/data --name pocketmine rkuzsma/docker-pocketmine
 ```
+
+After running the container the first time, `/SOME_LOCAL_DIRECTORY` will be initialized with a `settings.properties` file and other server settings files. Edit the files in `/SOME_LOCAL_DIRECTORY` and re-run the container for the changes totake effect.
 
 
 Original README.md starts below
