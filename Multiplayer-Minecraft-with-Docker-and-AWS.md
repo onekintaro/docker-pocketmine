@@ -26,13 +26,13 @@ Next, run the Minecraft Server software. Perform these steps on a laptop or desk
 docker run -d -it -v /PATH_TO_A_STORAGE_FOLDER:/data -e EULA=TRUE -e MODE=creative -e OPS=user1,user2 -e DIFFICULTY=peaceful -p 25565:25565 --name mc itzg/minecraft-server
 ```
 
-  `PATH_TO_A_STORAGE_FOLDER` is the full path to a folder to store the Minecraft server settings and game data.
+`PATH_TO_A_STORAGE_FOLDER` is the full path to a folder to store the Minecraft server settings and game data.
 
-  `user1,user2` are the Mojang account names of the players you want to act as operators in the game. Operators can run [commands](https://minecraft.gamepedia.com/Commands) in the game to do things like change the weather and make it daytime.
+`user1,user2` are the Mojang account names of the players you want to act as operators in the game. Operators can run [commands](https://minecraft.gamepedia.com/Commands) in the game to do things like change the weather and make it daytime.
 
-  Set the `MODE` to `creative` or `survival`
+Set the `MODE` to `creative` or `survival`
 
-  Full documentation is available at [https://github.com/itzg/dockerfiles/tree/master/minecraft-server](https://github.com/itzg/dockerfiles/tree/master/minecraft-server)
+Full documentation is available at [https://github.com/itzg/dockerfiles/tree/master/minecraft-server](https://github.com/itzg/dockerfiles/tree/master/minecraft-server)
 
 3. Find the IP address of your server (e.g. `192.168.1.something`). If you are on a WiFi home network, you can usually find this under your WiFi network settings. If you are on Amazon AWS, the public IP address is listed on the EC2 Instances details.
 
@@ -50,15 +50,15 @@ Next, run the Minecraft **Pocket Edition** Server software. Perform these steps 
 1. Install [Docker Community Edition](https://www.docker.com/community-edition) for Mac, Windows, or Linux. It's free! Docker greatly simplifies the Server installation steps.
 
 2. Run this command from a terminal or console window:
-..```
+```
 docker run --rm -it -p 19132:19132/tcp -p 19132:19132/udp -v /PATH_TO_A_STORAGE_FOLDER:/data  --name pocketmine rkuzsma/docker-pocketmine:latest
 ```
 
-  `PATH_TO_A_STORAGE_FOLDER` is the full path to a folder to store the Minecraft server settings and game data.
+`PATH_TO_A_STORAGE_FOLDER` is the full path to a folder to store the Minecraft server settings and game data.
 
-  After running the container the first time, `PATH_TO_A_STORAGE_FOLDER` will be initialized with a `settings.properties` file and other server settings files. Edit the files in `PATH_TO_A_STORAGE_FOLDER` and re-run the container for the changes to take effect.
+After running the container the first time, `PATH_TO_A_STORAGE_FOLDER` will be initialized with a `settings.properties` file and other server settings files. Edit the files in `PATH_TO_A_STORAGE_FOLDER` and re-run the container for the changes to take effect.
 
-  Documentation for the `settings.properties` and other configuration files, including how to change the game mode, add users as operators, etc., is available at [http://pocketmine-mp.readthedocs.io/en/latest/configuration.html](http://pocketmine-mp.readthedocs.io/en/latest/configuration.html)
+Documentation for the `settings.properties` and other configuration files, including how to change the game mode, add users as operators, etc., is available at [http://pocketmine-mp.readthedocs.io/en/latest/configuration.html](http://pocketmine-mp.readthedocs.io/en/latest/configuration.html)
 
 3. Find the IP address of your server (e.g. `192.168.1.something`). If you are on a WiFi home network, you can usually find this under your WiFi network settings. If you are on Amazon AWS, the public IP address is listed on the EC2 Instances details.
 
